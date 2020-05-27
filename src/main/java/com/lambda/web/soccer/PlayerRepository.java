@@ -1,4 +1,4 @@
-package com.lambda.web.PlayerEntity;
+package com.lambda.web.soccer;
 
 import com.lambda.web.MusicEntity.Music;
 import org.springframework.data.jpa.repository.JpaRepository;

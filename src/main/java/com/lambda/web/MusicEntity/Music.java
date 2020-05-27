@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Music {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mbrNo;
+//    @Column(length = 200, nullable =false)
 
     private String seq, title, artists, thumbnail;
 
