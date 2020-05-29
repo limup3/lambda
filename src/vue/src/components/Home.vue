@@ -57,8 +57,23 @@
         },
         methods: {
             search() {
-                alert("1");
-                this.$store.dispatch("crawling/search", this.searchWord);
+                if(this.searchWord === '축구'){
+                    alert('축구')
+                    this.$store.dispatch("soccer/search", this.searchWord);
+                    //type = 경로명/함수명 , 전달인자
+                }
+
+                if(this.searchWord === '벅스'){
+                    alert('벅스')
+                    this.$store.dispatch("crawling/search", this.searchWord);
+                }
+
+                if(this.searchWord === '영화'){
+                    alert('영화')
+                    this.$store.dispatch("movie/search", this.searchWord);
+                }
+
+
             }
         }
     };

@@ -1,18 +1,25 @@
 package com.lambda.web.soccer;
 
+
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="team")
+@Component @Lazy
 public class Team {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamNo;
 
-    @Column(length = 10) private String teamId;
-    @Column(length = 10) private String regionName;
+    @NotNull @Column(length = 10, nullable = false) private String teamId;
+    @NotNull @Column(length = 10) private String regionName;
     @Column(length = 40) private String teamName;
     @Column(length = 50) private String eTeamName;
     @Column(length = 10) private String origYyyy;
@@ -24,12 +31,12 @@ public class Team {
     @Column(length = 10) private String fax;
     @Column(length = 50) private String homepage;
     @Column(length = 10) private String owner;
-    @Column(length = 10) private String stadiumId;
+
 
     @Builder
     public Team(String teamId, String regionName, String teamName, String eTeamName, String origYyyy, String zipCode1,
                 String zipCode2, String address, String ddd, String tel, String fax,
-                String homepage, String owner, String stadiumId) {
+                String homepage, String owner) {
         this.teamId = teamId;
         this.regionName = regionName;
         this.teamName = teamName;
@@ -43,7 +50,14 @@ public class Team {
         this.fax = fax;
         this.homepage = homepage;
         this.owner = owner;
-        this.stadiumId = stadiumId;
+
 
     }
+
+    @OneToMany(mappedBy = "team")
+    private List<Player> players;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="stadium_id") @NotNull
+    private Stadium stadium;
+
 }

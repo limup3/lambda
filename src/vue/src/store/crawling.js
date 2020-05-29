@@ -36,7 +36,9 @@ const actions = {
             .catch(()=>{
                 alert('통신 실패 !')
             })
-}
+},
+
+
 }
 const mutations = {
     SEARCH(state, data) {

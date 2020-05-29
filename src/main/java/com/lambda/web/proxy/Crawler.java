@@ -1,21 +1,24 @@
 package com.lambda.web.proxy;
 
+import com.lambda.web.MusicEntity.Music;
+import com.lambda.web.MusicEntity.MusicRepository;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Component("crawler")
+@Service("crawler")
 public class Crawler extends Proxy {
-    @Autowired Inventory<HashMap<String,String>> inventory;
+    @Autowired Inventory<Music> inventory;
     @Autowired Box<String> box;
-    public ArrayList<HashMap<String,String>> bugsMusic(){
+    @Autowired MusicRepository musicRepository;
+    public void bugsMusic(){
         inventory.clear();
         try {
             String url = "https://music.bugs.co.kr/chart";
@@ -26,14 +29,14 @@ public class Crawler extends Proxy {
             Elements title = d.select("p.title");
             Elements artist = d.select("p.artist");
             Elements thumbnail = d.select("a.thumbnail");
-            HashMap<String,String> map = null;
+            Music music = null;
             for(int i = 0; i< title.size(); i++){
-                map= new HashMap<>();
-                map.put("seq", string(i+1));
-                map.put("title", title.get(i).text());
-                map.put("artists", artist.get(i).text());
-                map.put("thumbnail", thumbnail.get(i).select("img").attr("src"));
-                inventory.add(map);
+                music= new Music();
+                music.setSeq(string(i+1));
+                music.setTitle(title.get(i).text());
+                music.setArtists(artist.get(i).text());
+                music.setThumbnail(thumbnail.get(i).select("img").attr("src"));
+                musicRepository.save(music);
             }
 
         }catch (Exception e){
@@ -41,6 +44,5 @@ public class Crawler extends Proxy {
         }
         print("******************** 크롤링 결과 **************");
         inventory.get().forEach(System.out::print);
-        return inventory.get();
     }
 }
