@@ -24,14 +24,16 @@ public class MovieCrawler extends Proxy {
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
                     .execute();
             Document d = homepage.parse();
-            Elements title = d.select("div[class=tit3]");
+            Elements title = d.select("div.tit3");
             Elements seq = d.select("tr>td.ac:nth-child(1)");
+            Elements date = d.select("p.r_date");
             Movie movie = null;
             for(int i = 0 ; i< title.size(); i++){
                 movie = new Movie();
                 movie.setSeq(seq.get(i).select("img").attr("src"));
 //                movie.setSeq(string(i+1));
                 movie.setTitle(title.get(i).text());
+                movie.setRankDate(date.get(0).text());
                 movieRepository.save(movie);
             }
 

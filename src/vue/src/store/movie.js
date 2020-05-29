@@ -27,12 +27,16 @@ const mutations = {
         alert('영화 뮤테이션에 들어옴'+ data.count)
         state.movie = [];
         state.count = data.count;
+        state.rankDate = data.list.rankDate
         data.list.forEach(item => {
             state.movie.push({
                 seq: item.seq,
-                title: item.title
+                title: item.title,
+                rankDate: item.rankDate
+
             });
         });
+
     }
 };
 

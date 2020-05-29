@@ -7,6 +7,7 @@
                 <tr>
                     <th class="text-left">순위</th>
                     <th class="text-left">영화명</th>
+                    <th class="text-left">날짜 {{rankDate}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,7 +39,8 @@
         computed: {
             ...mapState({
                 count : state => state.movie.count,
-                movie: state => state.movie.movie
+                movie: state => state.movie.movie,
+                rankDate: state => state.movie.rankDate
             })
         }
     };

@@ -40,7 +40,18 @@ public class Movie {
         this.seq = seq;
     }
 
-    private String title,seq;
+    private String title;
+    private String seq;
+    private String rankDate;
+    public String getRankDate() {
+        return rankDate;
+    }
+
+    public void setRankDate(String rankDate) {
+        this.rankDate = rankDate;
+    }
+
+
 
     public Movie(){
 
