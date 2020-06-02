@@ -13,13 +13,13 @@ import java.util.Map;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 public class MovieController{
     @Autowired Pager pager;
     @Autowired MovieMapper movieMapper;
     @Autowired Proxy pxy;
     @Autowired Box<Object> box;
-    @GetMapping("/list/{pageNumber}/{searchWord}")
+    @GetMapping("/{searchWord}/{pageNumber}")
     public Map<?,?> list(@PathVariable("pageNumber") String pageNumber,
                          @PathVariable("searchWord") String searchWord){
         if(searchWord.equals("")){
@@ -41,10 +41,8 @@ public class MovieController{
         pxy.print(l.get(0).toString());
 
         box.clear();
-        box.put("page",pager);
-        box.put("count",l.size());
-        box.put("allcount",pager.getRowCount());
-        box.put("list",l);
+        box.put("pager", pager);
+        box.put("list", l);
 
         return box.get();
     }

@@ -27,18 +27,18 @@ public class ProxyController {
 //    public ArrayList<HashMap<String,String>> getlist(){
 //        return crawler.bugsMusic();
 //    }
-    @PostMapping("/bugsmusic")
-    public HashMap<String,Object> bugsmusic(@RequestBody String searchWord){
-        pxy.print("넘어온 키워드:"+searchWord);
-        box.clear();
-
-        if(musicRepository.count() == 0){ crawler.bugsMusic(); }
-        List<Music> list = musicRepository.findAll();
-        box.put("list",list);
-        pxy.print("***********");
-        box.put("count",list.size());
-        return box.get();
-    }
+//    @PostMapping("/bugsmusic")
+//    public HashMap<String,Object> bugsmusic(@RequestBody String searchWord){
+//        pxy.print("넘어온 키워드:"+searchWord);
+//        box.clear();
+//
+//        if(musicRepository.count() == 0){ crawler.bugsMusic(); }
+//        List<Music> list = musicRepository.findAll();
+//        box.put("list",list);
+//        pxy.print("***********");
+//        box.put("count",list.size());
+//        return box.get();
+//    }
 
     @GetMapping("/soccer/{searchWord}")
     public HashMap<String,Object> soccer(@PathVariable String searchWord){

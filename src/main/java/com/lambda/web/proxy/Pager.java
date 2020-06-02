@@ -30,6 +30,11 @@ public class Pager {
         nextBlock = pageStart + blockSize;
         // blockSize = 5;
         blockNow = pageNow / blockSize;
+        System.out.println("blockNow :: "+blockNow);
+        existPrev = blockNow != 0;
+        System.out.println("existPrev :: "+existPrev);
+        existNext = (blockNow + 1) != blockCount;
+        System.out.println("existNext:: " +existNext);
     }
 
 }

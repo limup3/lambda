@@ -1,34 +1,33 @@
 <template>
     <div>
-        <h3>검색결과 : {{pager.rowCount}}</h3>
+        <h3>검색결과 : {{count}}</h3>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
                 <tr>
                     <th class="text-left">No.</th>
-                    <th class="text-left">순위</th>
-                    <th class="text-left">영화제목</th>
-                    <th class="text-left">집계일</th>
+                    <th class="text-left">가 수</th>
+                    <th class="text-left">노래제목</th>
+                    <th class="text-left">이미지</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item of list" :key="item.seq">
-                    <td>{{ item.no }}</td>
-                    <td><img :src="item.seq"></td>
+                    <td>{{ item.seq }}</td>
+                    <td>{{ item.artist }}</td>
                     <td>{{ item.title }}</td>
-                    <td>{{ item.rankDate }}</td>
+                    <td><img :src="item.thumbnail"></td>
                 </tr>
                 </tbody>
             </template>
         </v-simple-table>
-        <div class="text-center" >
+        <div class="text-center">
             <div style="margin: 0 auto; width: 500px; height: 100px">
                 <span v-if ='pager.existPrev' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">이전</span>
                 <span v-for='i of pages' :key="i" style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">{{i}}</span>
                 <span v-if ='pager.existNext' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">다음</span>
             </div>
-
-            <!--<v-pagination v-model="page" :length="5" :total-visible="5"></v-pagination>-->
+<!--            <v-pagination v-model="page" :length="5" :total-visible="5"></v-pagination>-->
         </div>
     </div>
 
@@ -38,6 +37,7 @@
 <script>
     import { mapState } from "vuex";
     import axios from "axios";
+
     export default {
         data () {
             return {
@@ -51,12 +51,18 @@
             }
         },
         created() {
-            alert("영화 크리에이트")
             axios
-                .get(`${this.$store.state.search.context}/movies/${this.$store.state.search.searchWord}/${this.$store.state.search.pageNumber}`)
+            axios
+                .post(`${this.$store.state.search.context}bugsmusic`,
+                    `${this.$store.state.search.searchWord}`,
+                    {
+                        authorization: "JWT fefege..",
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    })
                 .then(res=>{
                     res.data.list.forEach(elem => {this.list.push(elem)})
-                    this.pager= res.data.pager
+                    this.pager=res.data.pager
                     let i = this.pager.pageStart +1
                     let arr = []
                     console.log(`페이지 끝: ${this.pager.pageEnd}`)
@@ -64,15 +70,16 @@
                         arr.push(i)
                     }
                 })
-                .catch(err=>{
-                    alert(`영화 통신 실패 ${err}`)
-                })
+                .catch(() => {
+                    alert("통신 실패 !");
+                });
         },
         computed: {
             ...mapState({
+
                 count: state => state.crawling.count,
-                bugsmusic: state => state.crawling.bugsmusic,
-                navermovie: state => state.crawling.navermovie,
+                bugsmusic: state => state.crawling.bugsmusic
+
             })
         }
     };

@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Crawler from "../components/Crawler";
-import Retriever from "../components/Retriever";
+import Music from "../components/Music";
 import Movie from "../components/Movie";
-import Home from "../components/Home"
+import Home from "../components/Home";
+import Soccer from "../components/Soccer";
 
 Vue.use(VueRouter)
 export default new VueRouter({
     mode:'history',
     routes : [
-        {path: '/crawler', component: Crawler},
+        {path: '/soccer', component: Soccer},
         {path: '/', component: Home},
-        { path: "/retriever", component: Retriever },
+        { path: "/music", component: Music },
         { path: "/movie", component: Movie }
     ]
 
