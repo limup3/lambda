@@ -23,14 +23,18 @@
         delete from movie no
     </delete>
 
-    <select id="selectMovies" resultType="com.lambda.web.MovieEntity.MovieDTO">
-  select no, seq, title, rank_date rankDate
-  from movie</select>
-    <select id="selectMovie" resultType="com.lambda.web.MovieEntity.MovieDTO">
+    <select id="selectMovies" resultType="com.lambda.web.MovieEntity.MovieDTO"
+            parameterType="com.lambda.web.proxy.Pager">
   select no, seq, title, rank_date rankDate
   from movie
-  where no</select>
+  limit #{rowStart}, #{pageSize}
+  </select>
+    <select id="selectMovie" resultType="com.lambda.web.MovieEntity.MovieDTO"
+    parameterType="String">
+  select no, seq, title, rank_date rankDate
+  from movie
+  where no = #{value}</select>
     <select id="count" resultType="int">
   select count(*)
-      from users</select>
+      from movie</select>
 </mapper>

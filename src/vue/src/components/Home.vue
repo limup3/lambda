@@ -55,6 +55,9 @@
                 count : 0
             };
         },
+        created() {
+            alert('홈에서 크리티드 실행됨')
+        },
         methods: {
             search() {
                 if(this.searchWord === '축구'){
@@ -69,7 +72,7 @@
                 }
 
                 if(this.searchWord === '영화'){
-                    alert('영화')
+                    alert(`${this.searchWord}`)
                     this.$store.dispatch("movie/search", this.searchWord);
                 }
 

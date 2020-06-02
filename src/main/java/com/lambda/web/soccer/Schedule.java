@@ -15,7 +15,6 @@ public class Schedule {
     private Long scheNo;
 
     @Column(length = 10) private String scheDate;
-
     @Column(length = 10) private String gubun;
     @Column(length = 10) private String hometeamId;
     @Column(length = 10) private String awayteamId;

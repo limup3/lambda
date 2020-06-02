@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter@Setter@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="stadium")
 @Component @Lazy

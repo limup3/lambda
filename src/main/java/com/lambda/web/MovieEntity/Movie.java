@@ -1,60 +1,32 @@
 package com.lambda.web.MovieEntity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
-@AllArgsConstructor
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor(access = AccessLevel.PUBLIC) // getter setter만 쓰고 Data는 쓰지말기
 @Entity(name="Movie")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
-
-    public Long getNo() {
-        return no;
-    }
-
-    public void setNo(Long no) {
-        this.no = no;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getSeq() {
-        return seq;
-    }
-
-    public void setSeq(String seq) {
-        this.seq = seq;
-    }
-
     private String title;
     private String seq;
     private String rankDate;
-    public String getRankDate() {
-        return rankDate;
-    }
 
-    public void setRankDate(String rankDate) {
+    @Builder
+    public Movie(String title, String seq, String rankDate){
+        this.title = title;
+        this.seq = seq;
         this.rankDate = rankDate;
     }
 
-
-
-    public Movie(){
-
-    }
 
 }

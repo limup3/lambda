@@ -10,7 +10,7 @@ const actions = {
     //'search':()=>{}
     async search({commit},searchWord){
         alert('영화 액션에 들어옴')
-    axios.get(state.context+'/movie/'+searchWord)
+    axios.get(state.context+`movie/list/0/${searchWord}`)
         .then(({data})=>{
 
             commit("SEARCH",data);
@@ -24,10 +24,11 @@ const actions = {
 
 const mutations = {
     SEARCH(state,data) {
-        alert('영화 뮤테이션에 들어옴'+ data.count)
+        alert("영화 개수 : "+data.count)
         state.movie = [];
-        state.count = data.count;
-        state.rankDate = data.list.rankDate
+        state.count = data.count
+        state.allcount = data.allcount
+        state.rankDate = data.rankDate
         data.list.forEach(item => {
             state.movie.push({
                 seq: item.seq,

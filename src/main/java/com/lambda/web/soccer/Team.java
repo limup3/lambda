@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter@Setter@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="team")
 @Component @Lazy
