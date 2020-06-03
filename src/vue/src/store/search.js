@@ -1,13 +1,12 @@
-// import axios from 'axios'
+import axios from 'axios'
 import router from "@/router";
 
 const state = {
     context : "http://localhost:5000/",
-    searchWord : 'null',
-    pageNumber: '0',
-    soccers : [],
-    movies : [],
-    musics: [],
+    searchWord :'null',
+    pageNumber:'0',
+    list : [],
+    pages : [],
     pager: {}
 }
 
@@ -26,6 +25,26 @@ const actions ={
 
 
     },
+    async transferPage({commit},payload){
+
+        axios
+            .get(`${state.context}${payload.cate}/${payload.searchWord}/${payload.pageNumber}`)
+            .then(({data})=>{
+                commit("TRANSFER",data)
+            })
+            .catch()
+        console.log(payload.searchWord)
+        console.log(payload.pageNumber)
+    },
+
+    async nextBlock({commit},payload){
+        axios
+            .get(`${state.context}${payload.cate}`)
+            .then(({data})=>{
+                commit("BLOCK",data)
+            })
+            .catch()
+    }
 
 
 }
@@ -47,6 +66,13 @@ const mutations = {
     SEARCHWORD(state, data){
         alert(`뮤테이션:: ${data}`)
         state.searchWord = data
+    },
+    TRANSFER(state,data){
+        state.pager = data.pager
+        state.list = data.list
+    },
+    BLOCK(){
+
     }
 }
 

@@ -56,7 +56,6 @@
             };
         },
         created() {
-            alert('홈에서 크리티드 실행됨')
         },
         methods: {
             search() {

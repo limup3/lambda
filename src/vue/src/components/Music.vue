@@ -52,10 +52,7 @@
         },
         created() {
             axios
-            axios
-                .post(`${this.$store.state.search.context}bugsmusic`,
-                    `${this.$store.state.search.searchWord}`,
-                    {
+                .post(`${this.$store.state.search.context}bugsmusic`, `${this.$store.state.search.searchWord}`,{
                         authorization: "JWT fefege..",
                         Accept: "application/json",
                         "Content-Type": "application/json"

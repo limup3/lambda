@@ -22,8 +22,7 @@ public class MusicController {
     @Autowired Pager pager;
 
     @PostMapping("/bugsmusic")
-    public HashMap<String,Object> bugsmusic(@RequestBody String searchWord
-                                           ){
+    public HashMap<String,Object> bugsmusic(@RequestBody String searchWord){
         if(searchWord.equals("")){
             pxy.print("검색어가 없음");
         }else{
@@ -31,11 +30,12 @@ public class MusicController {
         }
         box.clear();
         if(musicRepository.count() == 0) crawler.bugsMusic();
-
+//        pager.setPageNow(pxy.integer(pageNumber));
         pager.setBlockSize(5);
         pager.setPageSize(5);
         pager.paging();
         IFunction<Pager,List<Music>> f = p -> musicRepository.findAll();
+//        musicRepository.findAllById(pager.getBlockSize())
         List<Music> l = f.apply(pager);
         pxy.print("*******************");
         for(Music m : l){

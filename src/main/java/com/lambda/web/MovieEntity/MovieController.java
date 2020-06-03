@@ -27,8 +27,8 @@ public class MovieController{
         }else{
             pxy.print("검색어가" + searchWord);
         }
-
-        pager.setPageNow(pxy.integer(pageNumber));
+        pxy.print("넘어온 페이지번호 : "+pageNumber);
+        pager.setPageNow(pxy.integer(pageNumber.trim()));
         pager.setBlockSize(5);
         pager.setPageSize(5);
         pager.paging();
@@ -44,6 +44,13 @@ public class MovieController{
         box.put("pager", pager);
         box.put("list", l);
 
+        return box.get();
+    }
+    @GetMapping("")
+    public Map<?,?> block(){
+        pager.setBlockNow(pager.getBlockNow()+1);
+        pxy.print(Integer.toString(pager.getBlockNow()));
+        box.put("pager",pager);
         return box.get();
     }
 }
