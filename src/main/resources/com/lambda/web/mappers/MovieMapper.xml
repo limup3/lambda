@@ -27,13 +27,16 @@
             parameterType="com.lambda.web.proxy.Pager">
   select no, seq, title, rank_date rankDate
   from movie
+  <if test="searchWord !=null">
+      where title like '%${searchWord}%'
+  </if>
   limit #{rowStart}, #{pageSize}
   </select>
     <select id="selectMovie" resultType="com.lambda.web.MovieEntity.MovieDTO"
     parameterType="String">
   select no, seq, title, rank_date rankDate
   from movie
-  where no = #{value}</select>
+  where no = #{searchWord}</select>
     <select id="count" resultType="int">
   select count(*)
       from movie</select>

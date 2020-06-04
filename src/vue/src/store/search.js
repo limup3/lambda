@@ -7,6 +7,7 @@ const state = {
     pageNumber:'0',
     list : [],
     pages : [],
+    item : {},
     pager: {}
 }
 
@@ -33,15 +34,15 @@ const actions ={
                 commit("TRANSFER",data)
             })
             .catch()
-        console.log(payload.searchWord)
-        console.log(payload.pageNumber)
     },
 
-    async nextBlock({commit},payload){
+    async retrieveOne({commit},payload){
+
         axios
-            .get(`${state.context}${payload.cate}`)
+            .get(`${state.context}${payload.cate}/${payload.searchWord}`)
             .then(({data})=>{
-                commit("BLOCK",data)
+                commit("DETAIL",data)
+                router.push('/MovieDetail')
             })
             .catch()
     }
@@ -50,19 +51,7 @@ const actions ={
 }
 
 const mutations = {
-    // MOVIE(state, data){
-    //     alert("영화 뮤테이션에서 결과 수 : " + data.count)
-    //     state.movies = []
-    //     state.pager = data.pager;
-    //     data.list.forEach(item => {
-    //         state.movies.push({
-    //             movieSeq: item.movieSeq,
-    //             rank: item.rank,
-    //             title: item.title,
-    //             rankDate: item.rankDate
-    //         });
-    //     });
-    // },
+
     SEARCHWORD(state, data){
         alert(`뮤테이션:: ${data}`)
         state.searchWord = data
@@ -71,8 +60,8 @@ const mutations = {
         state.pager = data.pager
         state.list = data.list
     },
-    BLOCK(){
-
+    DETAIL(state,data){
+        state.item = data
     }
 }
 

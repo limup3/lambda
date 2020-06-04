@@ -4,6 +4,7 @@ import Music from "../components/Music";
 import Movie from "../components/Movie";
 import Home from "../components/Home";
 import Soccer from "../components/Soccer";
+import MovieDetail from "../components/MovieDetail";
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -12,7 +13,8 @@ export default new VueRouter({
         {path: '/soccer', component: Soccer},
         {path: '/', component: Home},
         { path: "/music", component: Music },
-        { path: "/movie", component: Movie }
+        { path: "/movie", component: Movie },
+        { path: "/moviedetail", component: MovieDetail },
     ]
 
 

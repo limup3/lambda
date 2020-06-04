@@ -1,7 +1,8 @@
 <template>
     <div>
         <h3>검색결과 : {{pager.rowCount}}</h3>
-
+        <span style="float: right; margin-right: 200px"><input id="searchWord"  type="text" style="border: 1px solid black">
+            <button @click="retrieve">검색</button></span>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -16,7 +17,7 @@
                 <tr v-for="item of list" :key="item.seq">
                     <td>{{ item.no }}</td>
                     <td><img :src="item.seq"/></td>
-                    <td>{{ item.title }}</td>
+                    <td id="title"><a @click="retrieveOne(item.no)" href="#">{{ item.title }}</a></td>
                     <td>{{ item.rankDate }}</td>
                 </tr>
                 </tbody>
@@ -24,9 +25,9 @@
         </v-simple-table>
         <div class="text-center" >
             <div style="margin: 0 auto; width: 500px; height: 100px">
-                <span v-if ='pager.existPrev' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">이전</span>
-                <span @click="transferPage(i)" v-for='i of pages' :key="i" style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">{{i}}</span>
-                <span @click="nextBlock()" v-if ='pager.existNext' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">다음</span>
+                <span @click="transferPage(pager.prevBlock)" v-if ='pager.existPrev' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">이전</span>
+                <span id="page" @click="transferPage(i-1)" v-for='i of pages' :key="i" style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">{{i}}</span>
+                <span @click="transferPage(pager.nextBlock)" v-if ='pager.existNext' style="width: 50px; height: 50px; border: 1px solid black;margin-right: 5px">다음</span>
             </div>
 
             <!--<v-pagination v-model="page" :length="5" :total-visible="5"></v-pagination>-->
@@ -43,6 +44,7 @@
     export default {
         mixins: [proxy],
         created() {
+
             let json = proxy.methods.paging(`${this.$store.state.search.context}movies/null/0`)
             this.$store.state.search.list = json.movies
             this.$store.state.search.pages = json.pages
@@ -59,14 +61,29 @@
         },
         methods: {
             transferPage(d) {
-                alert(`이동페이지 : ${d - 1}`)
-                this.$store.dispatch('search/transferPage', {cate: 'movies', searchWord: 'null', pageNumber: d - 1})
+                alert(`이동페이지 : ${d}`)
+                this.$store.dispatch('search/transferPage', {cate: 'movies', searchWord: null, pageNumber: d})
             },
-            nextBlock() {
-                alert('다음')
-                this.$store.dispatch('search/nextBlock',{cate: 'movies'})
+            retrieve(){
+                let searchWord = document.getElementById('searchWord').value
+                if(searchWord === '')searchWord = 'null'
 
+                this.$store.dispatch('search/transferPage',
+                    {cate: 'movies', searchWord: searchWord, pageNumber: 0})
+            },
+            retrieveOne(no){
+                alert(no)
+                    this.$store.dispatch('search/retrieveOne',
+                    {cate: 'movies', searchWord: no})
             }
+            // transferNext() {
+            //     alert('다음')
+            //     this.$store.dispatch('search/nextBlock',{cate: 'movies'})
+            //
+            // },
+            // transferPrev() {
+            //
+            // }
         }
     }
 
