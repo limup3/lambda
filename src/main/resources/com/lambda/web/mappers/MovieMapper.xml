@@ -7,6 +7,9 @@
             parameterType="com.lambda.web.MovieEntity.MovieDTO">
             insert seq, title, rank_date into movie
             values (#{seq},#{title},#{rankDate})
+        <selectKey resultType="int" keyProperty="movie_seq" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
 
     </insert>
 
@@ -40,4 +43,39 @@
     <select id="count" resultType="int">
   select count(*)
       from movie</select>
+
+    <select id="switchMovie" parameterType="com.lambda.web.MovieEntity.MovieDTO"
+            resultType="com.lambda.web.MovieEntity.MovieDTO">
+        select no, seq, title, rank_date rankDate
+        From movie where title like '%${searchWord}%'
+        <choose>
+            <when test="title != null">
+                AND title like #{title}
+            </when>
+            <when test="ost != null and ost.seq != null">
+                AND ost like #{ost.seq}
+            </when>
+            <otherwise>
+                AND rank_date like '${rankDate}'
+            </otherwise>
+        </choose>
+    </select>
+    <update id="updateMovie" parameterType="com.lambda.web.MovieEntity.MovieDTO">
+        update Movie
+        <set>
+            <if test="seq != null">seq=#{seq},</if>
+            <if test="title != null">title=#{title},</if>
+            <if test="rank_date != null">rank_date=#{rankDate},</if>
+        </set>
+        where no like ${no}
+    </update>
+<!--    <select id="selectPostIn" resultType="com.lambda.web.MovieEntity.MovieDTO">-->
+<!--        SELECT *-->
+<!--        FROM muisc m-->
+<!--        WHERE seq in-->
+<!--        <foreach item="movie" index="index" collection="list"-->
+<!--                 open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </select>-->
 </mapper>

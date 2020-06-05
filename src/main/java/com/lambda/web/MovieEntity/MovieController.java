@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
@@ -36,6 +37,14 @@ public class MovieController{
         pager.setPageSize(5);
         pager.paging();
         Function<Pager,List<MovieDTO>> f = p -> movieMapper.selectMovies(p);
+//        Function<Pager,List<MovieDTO>> f = p -> {
+//            return
+//                    movieMapper
+//                    .selectMovies(p)
+//                    .stream()
+//                    .sorted()
+//                    .collect(Collectors.toList());
+//        }; // 스트림 람다
         List<MovieDTO> l = f.apply(pager);
         pxy.print("*******************");
         for(MovieDTO m : l){
